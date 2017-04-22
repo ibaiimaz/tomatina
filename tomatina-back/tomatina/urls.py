@@ -7,6 +7,8 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'groups', views.GroupViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'user-status', views.UserStatusViewSet)
 router.register(r'team-status', views.TeamStatusViewSet)
 
 # Wire up our API using automatic URL routing.

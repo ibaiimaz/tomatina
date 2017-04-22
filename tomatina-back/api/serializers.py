@@ -16,13 +16,36 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
         
-        
-class UserStatusSerializer(serializers.HyperlinkedModelSerializer):
+
+class ListUsersSerializer(serializers.ListSerializer):
+
+    def validate(self, attrs):
+        products_ids = []
+        return attrs
+
+
+class UserStatusSerializer(serializers.Serializer):
+    status = serializers.CharField()
+    started = serializers.DateTimeField()
+    pomodoros = serializers.IntegerField()
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
+
     class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'groups')
-        
-        
+        list_serializer_class = ListUsersSerializer
+
+
 class TeamStatusSerializer(serializers.Serializer):
-    class Meta:
-        fields = ('url', 'username', 'email', 'groups')
+    status = serializers.CharField()
+    started = serializers.DateTimeField()
+    started = serializers.DateTimeField()
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
