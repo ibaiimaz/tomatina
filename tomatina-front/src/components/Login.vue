@@ -2,7 +2,7 @@
   <div>
     <div>
       <label>Login</label>
-      <input type="text" v-model="login" />
+      <input type="text" v-model="user.username" />
     </div>
 
     <div>
@@ -23,9 +23,9 @@
         this.$router.push('/dashboard')
       }
     },
+    props: ['user'],
     data() {
       return {
-        login: '',
         password: ''
       };
     },
