@@ -1,25 +1,20 @@
 <template>
   <div>
-    <div>{{status.name}}</div>
-
-    <div v-if="status.status == 'working'">
-      <md-icon class="md-primary">build</md-icon>
-    </div>
-    <div v-else>
-      <md-icon class="md-primary">pan_tool</md-icon>
-    </div>
-
+    <pomodoro :stats="status"></pomodoro>
   </div>
 </template>
 
 <script>
+
+  import Pomodoro from './Pomodoro';
+
   export default {
     name: 'team-member-status',
     props: ['status'],
     components: {
+      Pomodoro
     },
     methods: {
-
     },
     data() {
       return {

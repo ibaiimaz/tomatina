@@ -8,10 +8,13 @@
             <div class="md-subhead" v-if="stats">Status</div>
           </md-card-header-text>
         </md-card-header>
-
         <md-card-actions>
-          <md-button>Action</md-button>
-          <md-button>Action</md-button>
+            <div v-if="isFinished()">
+              <md-button>Start</md-button>
+            </div>
+            <div v-else>
+              <md-button>Stop</md-button>
+            </div>
         </md-card-actions>
       </md-card>
   </div>

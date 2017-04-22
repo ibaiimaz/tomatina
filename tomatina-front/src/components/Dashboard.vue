@@ -1,16 +1,11 @@
 <template>
   <div>
-    Dashboard
+    <h2>Dashboard</h2>
     <md-layout md-gutter md-align="center">
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
         <pomodoro :stats="stats"></pomodoro>
       </md-layout>
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
-        <!--<md-list>
-          <md-list-item v-for="status in teamMembers" :key="status.name">
-            <team-member-status :status="status"></team-member-status>
-          </md-list-item>
-        </md-list>-->
         <div>
           <h3>Your teams</h3>
         </div>
@@ -48,7 +43,7 @@
     data() {
       return {
         teams: [],
-        stats: new UserStats({ start: moment().subtract(15, 'minute') })
+        stats: new UserStats({ status: moment().subtract(15, 'minute') })
       };
     },
     created() {
