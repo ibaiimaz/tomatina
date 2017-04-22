@@ -1,11 +1,20 @@
-import User from '../models/user';
+import UserStats from '../models/userStats';
 
 export default class TeamService {
-  static getTeam() {
+  static getTeamStats() {
     const result = [
-      new User('alfredo'),
-      new User('ibai'),
-      new User('fernando'),
+      new UserStats({
+        name: 'alfredo',
+        status: 'working',
+        start: new Date(),
+        pomodoros: [{
+          start: new Date(),
+        }],
+      }),
+
+      new UserStats('alfredo'),
+      new UserStats('ibai'),
+      new UserStats('fernando'),
     ];
     return Promise.resolve(result);
   }
