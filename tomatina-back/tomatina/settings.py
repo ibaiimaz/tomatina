@@ -26,7 +26,7 @@ SECRET_KEY = '*9d^@@yrse1q11nq0$i&*@8(is1q!h!s%#ul(vhg)lmae3z+(j'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+AUTH_USER_MODEL = 'api.User'
 
 # Application definition
 
