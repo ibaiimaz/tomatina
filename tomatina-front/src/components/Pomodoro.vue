@@ -2,10 +2,10 @@
   <div>
     <md-card>
         <md-card-header>
-          <md-icon class="md-size-4x">account_box</md-icon>
+          <md-icon :class="getImageSize(size)">account_box</md-icon>
           <md-card-header-text>
-            <div class="md-title" style="font-size: 3em" v-if="stats">{{ remaining }}</div>
-            <div class="md-subhead" v-if="stats">Status</div>
+            <div class="md-title" :class="getFontSize(size)" v-if="stats">{{ remaining }}</div>
+            <div class="md-subhead" v-if="stats">{{getFontSize(size)}}</div>
           </md-card-header-text>
         </md-card-header>
 
@@ -26,15 +26,20 @@
     return moment(diff).format('mm:ss');
   };
 
+  const getImageSize = (size) => { return size == 's' ? 'md-size-2x' : 'md-size-4x' };
+  const getFontSize = (size) => { return size == 's' ? 'small' : 'normal' };
+
   export default {
     name: 'pomodoro',
-    props: ['stats'],
+    props: ['stats', 'size'],
     // methods:{
 
     // },
     data() {
       return {
-        remaining: ''
+        remaining: '',
+        getImageSize: getImageSize,
+        getFontSize: getFontSize
       };
     },
     created() {
@@ -49,7 +54,12 @@
 </script>
 
 <style scoped>
-
+  .normal {
+    font-size: 3em;
+  }
+  .small {
+    font-size: 1.5em;
+  }
 
 </style>
 

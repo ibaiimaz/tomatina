@@ -27,7 +27,8 @@
     name: 'login',
     methods:{
       doLogin: function(){
-        this.$router.push('/dashboard')
+        this.user.logged = true;
+        this.$router.push('/dashboard');
       }
     },
     props: ['user'],

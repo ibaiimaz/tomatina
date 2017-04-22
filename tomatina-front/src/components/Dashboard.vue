@@ -8,7 +8,7 @@
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
         <md-list>
           <md-list-item v-for="status in teamMembers" :key="status.name">
-            <team-member-status :status="status"></team-member-status>
+            <team-member-status size="s" :status="status"></team-member-status>
           </md-list-item>
         </md-list>
       </md-layout>

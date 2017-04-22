@@ -2,6 +2,7 @@
   <div id="app">
     <md-toolbar>
       <h1 class="md-title" style="flex: 1">TOMATINA</h1>
+      <span v-if="user.logged">{{user.username}}</span>
       <md-button class="md-icon-button">
         <md-icon>more_vert</md-icon>
       </md-button>
@@ -18,8 +19,10 @@ export default {
   data() {
     return {
       user: {
-        username: ''
-      }
+        username: '',
+        logged: false
+      },
+      logged: false
     };
   }
 };
