@@ -28,6 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_fields = ('username',)
 
     def perform_create(self, serializer):
 
@@ -38,7 +39,7 @@ class PomodoroViewSet(viewsets.ModelViewSet):
     queryset = Pomodoro.objects.all()
     serializer_class = PomodoroSerializer
 
-'''
+
 class UserStatusViewSet(viewsets.ModelViewSet):
     queryset = Pomodoro.objects.all()
     serializer_class = UserStatusSerializer
@@ -49,7 +50,9 @@ class UserStatusViewSet(viewsets.ModelViewSet):
             user_id=kwargs['pk'],
             started__gte= timezone.datetime(month=now.month, year=now.year, day=now.day)
         ).order_by('-started')
-        return super(UserStatusViewSet, self).retrieve(request, *args, **kwargs)
+        #self.get_serializer()()
+        #serializer = self.get_serializer(instance)
+        return Response({'status':12, 'started':21, 'pomodoros':12})
 
 
 class TeamStatusViewSet(viewsets.ModelViewSet):
@@ -60,4 +63,3 @@ class TeamStatusViewSet(viewsets.ModelViewSet):
         Pomodoro.objects.filter(user_id=kwargs['pk'], started__gte=timezone.now()).order_by('-started')
         return super(TeamStatusViewSet, self).retrieve(request, *args, **kwargs)
 
-'''
