@@ -6,7 +6,7 @@
         <md-icon>more_vert</md-icon>
       </md-button>
     </md-toolbar>
-    <div style="margin: 0 15px"> 
+    <div style="margin: 0 15px">
       <router-view :user="user"></router-view>
     </div>
   </div>
