@@ -29,6 +29,7 @@
   import UserStats from '../models/userStats';
 
   import TeamService from '../services/team.service';
+  import UserStatsService from '../services/user-stats.service';
 
   export default {
     name: 'dashboard',
@@ -43,12 +44,15 @@
     data() {
       return {
         teams: [],
-        stats: new UserStats({ status: moment().subtract(15, 'minute') })
+        stats: null
       };
     },
     created() {
       TeamService.getUserTeams(this.user.username).then(
         (teams) => { this.teams = teams; }
+      );
+      UserStatsService.getUserStats().then(
+        (stats) => { this.stats = stats; }
       );
     }
   };
