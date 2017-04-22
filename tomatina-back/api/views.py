@@ -8,10 +8,10 @@ from api.serializers import (
     UserSerializer,
     GroupSerializer,
     UserStatusSerializer,
-    TeamStatusSerializer
+    ListUsersSerializer,
+    PomodoroSerializer
 )
 User = get_user_model()
-
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -29,23 +29,17 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+    def perform_create(self, serializer):
 
-class UserStatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
+        super(UserViewSet, self).perform_create(serializer)
+
+
+class PomodoroViewSet(viewsets.ModelViewSet):
     queryset = Pomodoro.objects.all()
-    serializer_class = UserStatusSerializer
+    serializer_class = PomodoroSerializer
 
-    def retrieve(self, request, *args, **kwargs):
-        return super(UserStatusViewSet, self).retrieve(
-            request, *args, **kwargs)
-
-
+'''
 class UserStatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     queryset = Pomodoro.objects.all()
     serializer_class = UserStatusSerializer
 
@@ -59,12 +53,11 @@ class UserStatusViewSet(viewsets.ModelViewSet):
 
 
 class TeamStatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows teams to be viewed or edited.
-    """
     queryset = Pomodoro.objects.all()
-    serializer_class = TeamStatusSerializer
+    serializer_class = ListUsersSerializer
 
     def retrieve(self, request, *args, **kwargs):
         Pomodoro.objects.filter(user_id=kwargs['pk'], started__gte=timezone.now()).order_by('-started')
         return super(TeamStatusViewSet, self).retrieve(request, *args, **kwargs)
+
+'''
