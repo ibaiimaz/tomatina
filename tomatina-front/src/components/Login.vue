@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <div>
+  <form>
+    <md-input-container>
       <label>Login</label>
-      <input type="text" v-model="user.username" />
-    </div>
+      <md-input type="text" v-model="user.username" />
+    </md-input-container>
 
-    <div>
+    <md-input-container>
       <label>Passowrd</label>
-      <input type="password" v-model="password"/>
-    </div>
+      <md-input type="password" v-model="password"/>
+    </md-input-container>
     <div>
-      <button v-on:click="doLogin"> login </button>
+      <md-button class="md-raised" v-on:click.native="doLogin"> login </md-button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
