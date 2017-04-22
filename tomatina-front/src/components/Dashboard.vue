@@ -3,10 +3,10 @@
     Dashboard
     <div>
       {{ user.username }}
-      <pomodoro user="user"></pomodoro>
+      <pomodoro :stats="stats"></pomodoro>
     </div>
     <md-list>
-      <md-list-item v-for="status in teamMembers">
+      <md-list-item v-for="status in teamMembers" :key="status.name">
         <team-member-status :status="status"></team-member-status>
       </md-list-item>
     </md-list>
@@ -15,8 +15,12 @@
 </template>
 
 <script>
+  import moment from 'moment';
+
   import Pomodoro from './Pomodoro';
   import TeamMemberStatus from './TeamMemberStatus';
+
+  import UserStats from '../models/userStats';
 
   import TeamService from '../services/team.service';
 
@@ -32,7 +36,8 @@
     },
     data() {
       return {
-        teamMembers: []
+        teamMembers: [],
+        stats: new UserStats({start: moment().subtract(15, 'minute')})
       };
     },
     created() {
