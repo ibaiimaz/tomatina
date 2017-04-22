@@ -23,7 +23,6 @@ class UserStatusSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username', 'email', 'groups')
         
         
-class GroupStatusSerializer(serializers.HyperlinkedModelSerializer):
+class TeamStatusSerializer(serializers.Serializer):
     class Meta:
-        model = User
         fields = ('url', 'username', 'email', 'groups')
