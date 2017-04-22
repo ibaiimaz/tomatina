@@ -6,7 +6,9 @@
       <pomodoro user="user"></pomodoro>
     </div>
     <md-list>
-      <md-list-item v-for="member in teamMembers">{{ member.name }}</md-list-item>
+      <md-list-item v-for="status in teamMembers">
+        <team-member-status :status="status"></team-member-status>
+      </md-list-item>
     </md-list>
 
   </div>
@@ -14,6 +16,7 @@
 
 <script>
   import Pomodoro from './Pomodoro';
+  import TeamMemberStatus from './TeamMemberStatus';
 
   import TeamService from '../services/team.service';
 
@@ -21,7 +24,8 @@
     name: 'dashboard',
     props: ['user'],
     components: {
-      Pomodoro
+      Pomodoro,
+      TeamMemberStatus
     },
     methods:{
 
@@ -32,7 +36,7 @@
       };
     },
     created() {
-      TeamService.getTeam().then(
+      TeamService.getTeamStats().then(
         (members) => { this.teamMembers = members; }
       );
     }
