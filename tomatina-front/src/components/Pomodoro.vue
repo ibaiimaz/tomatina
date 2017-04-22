@@ -4,8 +4,8 @@
         <md-card-header>
           <md-icon :class="getImageSize(size)">account_box</md-icon>
           <md-card-header-text>
-            <div class="md-title" :class="getFontSize(size)" v-if="stats">{{ remaining }}</div>
-            <div class="md-subhead" v-if="stats">{{getFontSize(size)}}</div>
+            <div class="md-title" style="font-size: 3em" v-if="stats && !isFinished()">{{ remaining }}</div>
+            <div class="md-subhead" v-if="stats">Status</div>
           </md-card-header-text>
         </md-card-header>
 
@@ -21,9 +21,16 @@
   import moment from 'moment';
 
   const getTimeDifference = (stats) => {
-    const diff = moment(moment(stats.finish).diff(moment()));
+    let isPast = false;
+    let start = moment();
+    let finish = stats.finish;
+    if (finish.isBefore(start)) {
+      isPast = true;
+      start = stats.finish;
+      finish = moment();
+    }
 
-    return moment(diff).format('mm:ss');
+    return `${(isPast)? '-' : ''}${moment(finish.diff(start)).format('mm:ss')}`;
   };
 
   const getImageSize = (size) => { return size == 's' ? 'md-size-2x' : 'md-size-4x' };
@@ -32,13 +39,11 @@
   export default {
     name: 'pomodoro',
     props: ['stats', 'size'],
-    // methods:{
-
-    // },
     data() {
       return {
         remaining: '',
-        getImageSize: getImageSize,
+         isFinished: () => this.stats.finish.isBefore(moment()),
+         getImageSize: getImageSize,
         getFontSize: getFontSize
       };
     },
