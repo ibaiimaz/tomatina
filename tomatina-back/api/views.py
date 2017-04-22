@@ -1,14 +1,7 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from rest_framework import viewsets
 from api.serializers import UserSerializer, GroupSerializer
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+from api.model import Pomodoro
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -17,3 +10,30 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class UserStatusViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Pomodoro.objects.all()
+    serializer_class = UserStatusSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+
+        return super(UserStatusViewSet, self).retrieve(
+            request, *args, **kwargs)
+ 
+ 
+class GroupStatusViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Pomodoro.objects.all()
+    serializer_class = GroupStatusSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+
+        return super(GroupStatusViewSet, self).retrieve(
+            request, *args, **kwargs)
+
