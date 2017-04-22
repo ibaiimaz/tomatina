@@ -39,7 +39,7 @@
     data() {
       return {
         teamMembers: [],
-        stats: new UserStats({start: moment().subtract(15, 'minute')})
+        stats: new UserStats({start: moment().subtract(24, 'minute')})
       };
     },
     created() {
