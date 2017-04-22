@@ -1,25 +1,16 @@
 <template>
   <div>
-    Dashboard
+    Team
     <md-layout md-gutter md-align="center">
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
         <pomodoro :stats="stats"></pomodoro>
       </md-layout>
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
-        <!--<md-list>
+        <md-list>
           <md-list-item v-for="status in teamMembers" :key="status.name">
             <team-member-status :status="status"></team-member-status>
           </md-list-item>
-        </md-list>-->
-        <div>
-          <h3>Your teams</h3>
-        </div>
-        <md-list>
-          <md-list-item v-for="team in teams" :key="team.id">
-            <router-link :to="{ name: 'Team', params: { teamId: team.id }}">{{team.name}}</router-link>
-          </md-list-item>
         </md-list>
-
       </md-layout>
     </md-layout>
   </div>
@@ -36,24 +27,24 @@
   import TeamService from '../services/team.service';
 
   export default {
-    name: 'dashboard',
+    name: 'team',
     props: ['user'],
     components: {
       Pomodoro,
       TeamMemberStatus
     },
-    methods: {
+    methods:{
 
     },
     data() {
       return {
-        teams: [],
-        stats: new UserStats({ start: moment().subtract(15, 'minute') })
+        teamMembers: [],
+        stats: new UserStats({start: moment().subtract(15, 'minute')})
       };
     },
     created() {
-      TeamService.getUserTeams(this.user.username).then(
-        (teams) => { this.teams = teams; }
+      TeamService.getTeamStats().then(
+        (members) => { this.teamMembers = members; }
       );
     }
   };
