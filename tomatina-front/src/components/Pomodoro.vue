@@ -1,6 +1,19 @@
 <template>
   <div>
-    <span v-if="stats">{{ remaining }}</span>
+    <md-card>
+        <md-card-header>
+          <md-icon class="md-size-4x">account_box</md-icon>
+          <md-card-header-text>
+            <div class="md-title" style="font-size: 3em" v-if="stats">{{ remaining }}</div>
+            <div class="md-subhead" v-if="stats">Status</div>
+          </md-card-header-text>
+        </md-card-header>
+
+        <md-card-actions>
+          <md-button>Action</md-button>
+          <md-button>Action</md-button>
+        </md-card-actions>
+      </md-card>
   </div>
 </template>
 
@@ -37,4 +50,6 @@
 
 <style scoped>
 
+
 </style>
+

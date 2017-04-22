@@ -1,16 +1,18 @@
 <template>
   <div>
     Dashboard
-    <div>
-      {{ user.username }}
-      <pomodoro :stats="stats"></pomodoro>
-    </div>
-    <md-list>
-      <md-list-item v-for="status in teamMembers" :key="status.name">
-        <team-member-status :status="status"></team-member-status>
-      </md-list-item>
-    </md-list>
-
+    <md-layout md-gutter md-align="center"> 
+      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
+        <pomodoro :stats="stats"></pomodoro>
+      </md-layout>
+      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
+        <md-list>
+          <md-list-item v-for="status in teamMembers" :key="status.name">
+            <team-member-status :status="status"></team-member-status>
+          </md-list-item>
+        </md-list>
+      </md-layout>
+    </md-layout>  
   </div>
 </template>
 
