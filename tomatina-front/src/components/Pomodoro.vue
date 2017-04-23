@@ -46,6 +46,7 @@
       };
     },
     created() {
+      debugger;
       if (this.stats && !this.stats.isFinished()) {
         setInterval(() => {
           this.remaining = getTimeDifference(this.stats);
