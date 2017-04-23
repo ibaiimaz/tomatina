@@ -21,7 +21,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class PomodoroSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Pomodoro
-        fields = ('url','id', 'user_id', 'is_canceled')
+        fields = ('url','id', 'user_id', 'is_canceled', 'started')
         only_read = ('started')
 
 
