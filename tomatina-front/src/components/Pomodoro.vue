@@ -10,7 +10,7 @@
         </md-card-header>
         <md-card-actions>
             <div v-if="isFinished()">
-              <md-button v-on:click="startPomodoro">Start</md-button>
+              <md-button v-on:click.native="startPomodoro">Start</md-button>
             </div>
             <div v-else>
               <md-button>Stop</md-button>
