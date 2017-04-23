@@ -17,8 +17,7 @@ class Pomodoro(models.Model):
     is_canceled = models.BooleanField(null=False, default=False)
 
     class Meta:
-        unique_together = ('user','started')
-        ordering = ('started',)
+        ordering = ('-started',)
 
     def __unicode__(self):
         return '#{} {}'.format(self.id_user, self.started)

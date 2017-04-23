@@ -34,7 +34,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
-        group, error = Group.objects.get_or_create(name="Group 1")
+        user_group_name = "Team %s" % serializer.instance.username
+        group, error = Group.objects.get_or_create(name=user_group_name)
         serializer.instance.groups.add(group.pk)
 
 
