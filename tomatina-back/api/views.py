@@ -53,7 +53,7 @@ class UserStatusViewSet(viewsets.ModelViewSet):
     serializer_class = Serializer
 
     def list(self, request, *args, **kwargs):
-        response = {}
+        response = {'data':[]}
         if 'user_id' in request.query_params:
             now = timezone.now()
             pomodoros = Pomodoro.objects.filter(
@@ -63,13 +63,13 @@ class UserStatusViewSet(viewsets.ModelViewSet):
             if pomodoros:
                 pomodoro = pomodoros.first()
                 response = {
-                    'data':{
+                    'data':[{
                         'user_id': pomodoro.pk,
                         'status': get_status([k for k in pomodoros]),
-                        'name': pomodoro.user.username,
+                        'username': pomodoro.user.username,
                         'started': pomodoro.started,
                         'pomodoros': pomodoros.count()
-                        }
+                        }]
                 }
 
         return Response(response)
@@ -80,7 +80,7 @@ class TeamStatusViewSet(viewsets.ModelViewSet):
     serializer_class = Serializer
 
     def list(self, request, *args, **kwargs):
-        response = {}
+        response = {'data':[]}
         if 'group_id' in request.query_params:
             now = timezone.now()
             pomodoros = Pomodoro.objects.filter(
@@ -96,12 +96,11 @@ class TeamStatusViewSet(viewsets.ModelViewSet):
 
                     users[pomodoro.user_id].append(pomodoro)
 
-                response = {'data': []}
                 for user in users:
                     response['data'].append({
                         'user_id': users[user][0].pk,
                         'status': get_status(users[user]),
-                        'name': pomodoro.user.username,
+                        'username': pomodoro.user.username,
                         'started': users[user][0].started,
                         'pomodoros': len(users[user])
                     })
