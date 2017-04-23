@@ -10,7 +10,7 @@
         </md-card-header>
         <md-card-actions>
             <div v-if="isFinished()">
-              <md-button>Start</md-button>
+              <md-button v-on:click="startPomodoro">Start</md-button>
             </div>
             <div v-else>
               <md-button>Stop</md-button>
@@ -25,6 +25,8 @@
 
   import Countdown from './Countdown';
 
+  import PomodoroService from '../services/pomodoro.service';
+
   const getImageSize = (size) => { return size == 's' ? 'md-size-2x' : 'md-size-4x' };
   const getFontSize = (size) => { return size == 's' ? 'small' : 'normal' };
 
@@ -34,16 +36,14 @@
     data() {
       return {
         remaining: '',
-         isFinished: () => this.stats && this.stats.finish.isBefore(moment()),
-         getImageSize: getImageSize,
+        isFinished: () => !this.stats || this.stats.hasExpired(),
+        getImageSize: getImageSize,
         getFontSize: getFontSize
       };
     },
-    created() {
-      if (this.stats && !this.stats.isFinished()) {
-        setInterval(() => {
-          this.remaining = this.getTimeDifference(this.stats);
-        }, 1000);
+    methods: {
+      startPomodoro: () => {
+        PomodoroService.createPomodoro();
       }
     },
     components: {
