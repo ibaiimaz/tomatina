@@ -38,7 +38,6 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.instance.groups.add(group.pk)
 
 
-
 class PomodoroViewSet(viewsets.ModelViewSet):
     queryset = Pomodoro.objects.all()
     serializer_class = PomodoroSerializer
