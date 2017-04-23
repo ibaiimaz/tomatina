@@ -11,15 +11,13 @@
             <team-member-status size="s" :status="status"></team-member-status>
           </md-list-item>
         </md-list>-->
-        <div>
-          <h3>Your teams</h3>
-        </div>
-        <md-list>
-          <md-list-item v-for="team in teams" :key="team.id">
-            <router-link :to="{ name: 'Team', params: { teamId: team.id }}">{{team.name}}</router-link>
+        <md-list class="collection">
+          <md-header class="header">Your teams</md-header>
+          <md-list-item class="collection-item" v-for="team in teams" :key="team.id">
+            <md-icon>group</md-icon> <span>
+            <router-link :to="{ name: 'Team', params: { teamId: team.id }}">{{team.name}}</router-link></span>
           </md-list-item>
-        </md-list>
-
+        </md-list>        
       </md-layout>
     </md-layout>
   </div>
@@ -61,5 +59,17 @@
 </script>
 
 <style scoped>
-
+  .teams-list {
+    border: 1px solid rgba(0,0,0,.12);
+  }
+  .collection {
+    margin: 0.5rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .collection .header {
+    text-align: center;
+  }
 </style>
