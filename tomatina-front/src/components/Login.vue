@@ -29,12 +29,12 @@
   export default {
     name: 'login',
     methods:{
-      doLogin: () => {
+      doLogin: function() {
         var that = this;
-        this.user.logged = true;
         UserService.getUser(this.user.username)
           .then((user)=>{
             this.user.id = user.id;
+            this.user.logged = true;
           })
           .then(() => {
              UserStatsService.getUserStats().then(
