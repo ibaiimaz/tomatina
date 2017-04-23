@@ -29,8 +29,9 @@
   export default {
     name: 'login',
     methods:{
-      doLogin: function() {
+      doLogin: () => {
         var that = this;
+        this.user.logged = true;
         UserService.getUser(this.user.username)
           .then((user)=>{
             this.user.id = user.id;
