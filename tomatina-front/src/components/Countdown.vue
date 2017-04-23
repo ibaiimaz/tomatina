@@ -11,6 +11,9 @@
     let isPast = false;
     let start = moment();
     let finish = stats.finish;
+    if (!finish) {
+      return;
+    }
     if (finish.isBefore(start)) {
       isPast = true;
       start = stats.finish;
