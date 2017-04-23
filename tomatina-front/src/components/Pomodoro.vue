@@ -4,8 +4,14 @@
         <md-card-header>
           <md-icon :class="getImageSize(size)">account_box</md-icon>
           <md-card-header-text>
-            <countdown :stats="stats" v-if="stats"></countdown>
-            <div class="md-subhead" v-if="stats">Status</div>
+            <div class="md-subhead" v-if="stats">{{stats.name}}</div>
+            <countdown class="countdown" :stats="stats" v-if="stats"></countdown>
+            <div v-if="stats && stats.status == 'working'">
+              <md-icon class="md-primary">alarm_on</md-icon>
+            </div>
+            <div v-else>
+              <md-icon class="md-warn">alarm_off</md-icon>
+            </div>
           </md-card-header-text>
         </md-card-header>
         <md-card-actions>
@@ -40,7 +46,7 @@
       };
     },
     created() {
-
+      console.log(this.stats);
     },
     components: {
       Countdown
@@ -55,6 +61,9 @@
   }
   .small {
     font-size: 1.5em;
+  }
+  .countdown {
+    margin: 10px 0;
   }
 
 </style>

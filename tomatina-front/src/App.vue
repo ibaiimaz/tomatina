@@ -4,7 +4,6 @@
       <h1 class="md-title" style="flex: 1"><router-link :to="{ path: '/dashboard' }">TOMATINA</router-link></h1>      
       <span v-if="user.logged"><b>Welcome</b> {{user.username}}</span>      
       <md-button class="md-icon-button">
-        <md-icon>more_vert</md-icon>
       </md-button>
     </md-toolbar>
     <div style="margin: 0 15px">
