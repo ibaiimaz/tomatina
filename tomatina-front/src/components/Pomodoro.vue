@@ -42,7 +42,7 @@
     created() {
       if (this.stats && !this.stats.isFinished()) {
         setInterval(() => {
-          this.remaining = getTimeDifference(this.stats);
+          this.remaining = this.getTimeDifference(this.stats);
         }, 1000);
       }
     },

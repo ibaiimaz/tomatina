@@ -5,19 +5,14 @@
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
         <pomodoro :stats="user.stats"></pomodoro>
       </md-layout>
-      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50"> 
-        <!--<md-list>
-          <md-list-item v-for="status in teamMembers" :key="status.name">
-            <team-member-status size="s" :status="status"></team-member-status>
-          </md-list-item>
-        </md-list>-->
+      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
         <md-list class="collection">
-          <md-header class="header">Your teams</md-header>
+          <div class="header">Your teams</div>
           <md-list-item class="collection-item" v-for="team in teams" :key="team.id">
             <md-icon>group</md-icon> <span>
             <router-link :to="{ name: 'Team', params: { teamId: team.id }}">{{team.name}}</router-link></span>
           </md-list-item>
-        </md-list>        
+        </md-list>
       </md-layout>
     </md-layout>
   </div>
@@ -53,9 +48,6 @@
       TeamService.getUserTeams(this.user.username).then(
         (teams) => { this.teams = teams; }
       );
-      // UserStatsService.getUserStats().then(
-      //   (stats) => { this.stats = stats; }
-      // );
     }
   };
 
