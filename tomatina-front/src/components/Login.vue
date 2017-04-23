@@ -24,17 +24,26 @@
 
 <script>
   import UserService from '../services/user.service';
+  import UserStatsService from '../services/user-stats.service';
 
   export default {
     name: 'login',
     methods:{
-      doLogin: function(){
-        this.user.logged = true;
+      doLogin: function() {
+        var that = this;
         UserService.getUser(this.user.username)
           .then((user)=>{
             this.user.id = user.id;
-            this.$router.push('/dashboard')
-        });
+            this.user.logged = true;
+          })
+          .then(() => {
+             UserStatsService.getUserStats(that.user.id).then(
+              (stats) => {
+                that.user.stats = stats;
+                that.$router.push('/dashboard');
+              }
+            );
+          });
       }
     },
     props: ['user'],

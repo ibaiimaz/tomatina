@@ -130,3 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+POMODORO_DURATION = 1500
+SHORT_BREAK_DURATION = 300
+LONG_BREAK_DURATION = 600
+POMODORO_ITERATIONS = 4

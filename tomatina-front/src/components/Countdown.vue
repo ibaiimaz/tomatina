@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="md-title" v-if="stats && !isFinished()">{{ remaining }}</div>
+    <div class="md-title" v-if="!isFinished()">{{ remaining }}</div>
   </div>
 </template>
 
@@ -26,7 +26,7 @@
     data() {
       return {
         remaining: '',
-         isFinished: () => this.stats && this.stats.finish.isBefore(moment())
+         isFinished: () => !this.stats || this.stats.hasExpired()
       };
     },
     created() {

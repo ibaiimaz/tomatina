@@ -1,4 +1,6 @@
 import moment from 'moment';
+import Vue from 'vue';
+
 import UserStats from '../models/userStats';
 
 export default class UserStatsService {
@@ -40,18 +42,13 @@ export default class UserStatsService {
     return Promise.resolve(result);
   }
 
-  static getUserStats() {
-    const result =  new UserStats({
-      name: 'alfredo',
-      status: 'working',
-      start: moment().subtract(20, 'm'),
-      pomodoros: [
-        { start: moment().subtract(20, 'm') },
-        { start: moment().subtract(50, 'm') },
-        { start: moment().subtract(200, 'm') },
-      ]
-    });
-
-    return Promise.resolve(result);
+  static getUserStats(userId) {
+    return Vue.http.get('user-status/', { params: {user_id: userId }})
+      .then(
+        (response) => new UserStats(response.body.data),
+        (error) => {
+          throw error;
+        }
+      );
   }
 }
