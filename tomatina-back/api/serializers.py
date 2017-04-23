@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ('url', 'name')
+        fields = ('url', 'id', 'name')
 
 
 class PomodoroSerializer(serializers.HyperlinkedModelSerializer):
