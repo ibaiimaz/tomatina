@@ -8,7 +8,7 @@
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="30"> 
         <md-list class="collection">
           <div class="header">Your teams</div>
-          <md-list-item class="collection-item" v-for="team in teams" :key="team.id">
+          <md-list-item class="collection-item" v-for="team in user.teams" :key="team.id">
             <md-icon>group</md-icon> <span>
             <router-link :to="{ name: 'Team', params: { teamId: team.id }}">{{team.name}}</router-link></span>
           </md-list-item>
@@ -26,7 +26,6 @@
 
   import UserStats from '../models/userStats';
 
-  import TeamService from '../services/team.service';
   import UserStatsService from '../services/user-stats.service';
 
   export default {
@@ -39,15 +38,13 @@
     methods: {
 
     },
-    data() {
-      return {
-        teams: []
-      };
-    },
     created() {
-      TeamService.getUserTeams(this.user.username).then(
-        (teams) => { this.teams = teams; }
-      );
+      UserStatsService.getUserStats(this.user.id)
+        .then(
+          (stats) => {
+            this.user.stats = stats;
+          }
+        );
     }
   };
 

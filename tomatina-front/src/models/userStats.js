@@ -3,7 +3,7 @@ import moment from 'moment';
 export default class UserStats {
 
   constructor(data) {
-    this.name = data.name;
+    this.name = data.username;
     this.status = data.status;
     this.start = moment(data.started);
     this.finish = this.start.add(25, 'm');

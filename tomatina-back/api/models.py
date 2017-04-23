@@ -13,7 +13,6 @@ class User(AbstractUser):
 
 class Pomodoro(models.Model):
     user = models.ForeignKey(User, null=False, related_name='pomodoros', on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, null=False, related_name='pomodoros', on_delete=models.CASCADE)
     started = models.DateTimeField(default=timezone.now())
     is_canceled = models.BooleanField(null=False, default=False)
 

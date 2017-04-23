@@ -44,8 +44,7 @@ class PomodoroViewSet(viewsets.ModelViewSet):
     serializer_class = PomodoroSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=User.objects.get(pk=self.request.data['user_id']),
-                        group=Group.objects.get(pk=self.request.data['group_id']))
+        serializer.save(user=User.objects.get(pk=self.request.data['user_id']))
 
 
 class UserStatusViewSet(viewsets.ModelViewSet):
@@ -82,9 +81,10 @@ class TeamStatusViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         response = {'data':[]}
         if 'group_id' in request.query_params:
+            ids = list(User.objects.filter(groups__pk=request.query_params['group_id'][0]).values_list('pk', flat=True))
             now = timezone.now()
             pomodoros = Pomodoro.objects.filter(
-                group_id=request.query_params['group_id'][0],
+                user_id__in=ids,
                 started__gte=timezone.datetime(month=now.month, year=now.year, day=now.day)
             ).order_by('user_id', '-started')
             users = {}
