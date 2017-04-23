@@ -33,7 +33,10 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_fields = ('username',)
 
     def perform_create(self, serializer):
-        super(UserViewSet, self).perform_create(serializer)
+        serializer.save()
+        group, error = Group.objects.get_or_create(name="Group 1")
+        serializer.instance.groups.add(group.pk)
+
 
 
 class PomodoroViewSet(viewsets.ModelViewSet):
