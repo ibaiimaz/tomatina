@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 export default class PomodoroService {
-  static createPomodoro() {
-    return Vue.http.post('pomodoro', {});
+  static createPomodoro(userId) {
+    return Vue.http.post('pomodoro/', { user_id: userId });
   }
 }
