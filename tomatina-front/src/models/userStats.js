@@ -13,4 +13,8 @@ export default class UserStats {
   isFinished() {
     return this.start.isBefore(this.finish);
   }
+
+  hasExpired() {
+     return this.finish.isBefore(moment());
+  }
 }
