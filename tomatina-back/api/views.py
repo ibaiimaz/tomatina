@@ -60,13 +60,17 @@ class UserStatusViewSet(viewsets.ModelViewSet):
                 user_id=request.query_params['user_id'][0],
                 started__gte=timezone.datetime(month=now.month, year=now.year, day=now.day)
             ).order_by('-started')
-            response = {
-                'data':{
-                    'status': get_status([k for k in pomodoros]),
-                    'started': pomodoros.first().started,
-                    'pomodoros': pomodoros.count()
-                    }
-            }
+            if pomodoros:
+                pomodoro = pomodoros.first()
+                response = {
+                    'data':{
+                        'user_id': pomodoro.pk,
+                        'status': get_status([k for k in pomodoros]),
+                        'name': pomodoro.user.username,
+                        'started': pomodoro.started,
+                        'pomodoros': pomodoros.count()
+                        }
+                }
 
         return Response(response)
 
@@ -84,19 +88,22 @@ class TeamStatusViewSet(viewsets.ModelViewSet):
                 started__gte=timezone.datetime(month=now.month, year=now.year, day=now.day)
             ).order_by('user_id', '-started')
             users = {}
-            for pomodoro in pomodoros:
-                if not pomodoro.user_id in users:
-                    users[pomodoro.user_id] = [pomodoro]
-                    continue
+            if pomodoros:
+                for pomodoro in pomodoros:
+                    if not pomodoro.user_id in users:
+                        users[pomodoro.user_id] = [pomodoro]
+                        continue
 
-                users[pomodoro.user_id].append(pomodoro)
+                    users[pomodoro.user_id].append(pomodoro)
 
-            response = {'data': []}
-            for user in users:
-                response['data'].append({
-                    'status': get_status(users[user]),
-                    'started': users[user][0].started,
-                    'pomodoros': len(users[user])
-                })
+                response = {'data': []}
+                for user in users:
+                    response['data'].append({
+                        'user_id': users[user][0].pk,
+                        'status': get_status(users[user]),
+                        'name': pomodoro.user.username,
+                        'started': users[user][0].started,
+                        'pomodoros': len(users[user])
+                    })
 
         return Response(response)

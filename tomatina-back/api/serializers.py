@@ -7,6 +7,11 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    groups = serializers.SerializerMethodField()
+
+    def get_groups(self, obj):
+        return [{'id': g.pk, 'name': g.name} for g in obj.groups.all()]
+
     class Meta:
         model = User
         fields = ('url','id', 'username', 'email', 'groups')
