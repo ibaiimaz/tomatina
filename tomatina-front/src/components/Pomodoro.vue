@@ -40,11 +40,6 @@
       };
     },
     created() {
-      if (this.stats && !this.stats.isFinished()) {
-        setInterval(() => {
-          this.remaining = this.getTimeDifference(this.stats);
-        }, 1000);
-      }
     },
     components: {
       Countdown
