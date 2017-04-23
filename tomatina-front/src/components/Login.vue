@@ -37,7 +37,7 @@
             this.user.logged = true;
           })
           .then(() => {
-             UserStatsService.getUserStats().then(
+             UserStatsService.getUserStats(that.user.id).then(
               (stats) => {
                 that.user.stats = stats;
                 that.$router.push('/dashboard');
