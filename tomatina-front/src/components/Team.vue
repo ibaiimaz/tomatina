@@ -1,10 +1,7 @@
 <template>
   <div>
-    Team
+    <h2>Team</h2>
     <md-layout md-gutter md-align="center">
-      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
-        <pomodoro :stats="stats"></pomodoro>
-      </md-layout>
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
         <md-list>
           <md-list-item v-for="status in teamMembers" :key="status.name">
@@ -24,7 +21,7 @@
 
   import UserStats from '../models/userStats';
 
-  import TeamService from '../services/team.service';
+  import UserStatsService from '../services/user-stats.service';
 
   export default {
     name: 'team',
@@ -43,7 +40,7 @@
       };
     },
     created() {
-      TeamService.getTeamStats().then(
+      UserStatsService.getTeamStats().then(
         (members) => { this.teamMembers = members; }
       );
     }

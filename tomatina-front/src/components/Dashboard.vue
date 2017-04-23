@@ -1,11 +1,11 @@
 <template>
   <div>
-    Dashboard
+    <h2>Dashboard</h2>
     <md-layout md-gutter md-align="center">
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
         <pomodoro :stats="stats"></pomodoro>
       </md-layout>
-      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50">
+      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="50"> 
         <!--<md-list>
           <md-list-item v-for="status in teamMembers" :key="status.name">
             <team-member-status size="s" :status="status"></team-member-status>
@@ -32,6 +32,7 @@
   import UserStats from '../models/userStats';
 
   import TeamService from '../services/team.service';
+  import UserStatsService from '../services/user-stats.service';
 
   export default {
     name: 'dashboard',
@@ -46,12 +47,15 @@
     data() {
       return {
         teams: [],
-        stats: new UserStats({ start: moment().subtract(15, 'minute') })
+        stats: null
       };
     },
     created() {
       TeamService.getUserTeams(this.user.username).then(
         (teams) => { this.teams = teams; }
+      );
+      UserStatsService.getUserStats().then(
+        (stats) => { this.stats = stats; }
       );
     }
   };

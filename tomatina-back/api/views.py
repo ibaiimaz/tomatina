@@ -8,10 +8,10 @@ from api.serializers import (
     UserSerializer,
     GroupSerializer,
     UserStatusSerializer,
-    TeamStatusSerializer
+    ListUsersSerializer,
+    PomodoroSerializer
 )
 User = get_user_model()
-
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -28,25 +28,19 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_fields = ('username',)
+
+    def perform_create(self, serializer):
+        super(UserViewSet, self).perform_create(serializer)
+
+
+class PomodoroViewSet(viewsets.ModelViewSet):
+    queryset = Pomodoro.objects.all()
+    serializer_class = PomodoroSerializer
 
 
 class UserStatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Pomodoro.objects.all()
-    serializer_class = UserStatusSerializer
-
-    def retrieve(self, request, *args, **kwargs):
-        return super(UserStatusViewSet, self).retrieve(
-            request, *args, **kwargs)
-
-
-class UserStatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Pomodoro.objects.all()
+    queryset = Pomodoro.objects.none()
     serializer_class = UserStatusSerializer
 
     def retrieve(self, request, *args, **kwargs):
@@ -55,16 +49,14 @@ class UserStatusViewSet(viewsets.ModelViewSet):
             user_id=kwargs['pk'],
             started__gte= timezone.datetime(month=now.month, year=now.year, day=now.day)
         ).order_by('-started')
-        return super(UserStatusViewSet, self).retrieve(request, *args, **kwargs)
+        return Response({'status':12, 'started':21, 'pomodoros':pomodoros.count()})
 
 
 class TeamStatusViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows teams to be viewed or edited.
-    """
     queryset = Pomodoro.objects.all()
-    serializer_class = TeamStatusSerializer
+    serializer_class = ListUsersSerializer
 
     def retrieve(self, request, *args, **kwargs):
         Pomodoro.objects.filter(user_id=kwargs['pk'], started__gte=timezone.now()).order_by('-started')
         return super(TeamStatusViewSet, self).retrieve(request, *args, **kwargs)
+
