@@ -19,7 +19,6 @@
         </div>
       </md-layout>
     </md-layout md-gutter>
-    <audio ref="audio" src="/static/Sound-of-a-peacock.mp3"></audio>
   </div>
 </template>
 
@@ -34,7 +33,6 @@
         var that = this;
         UserService.getUser(this.user.username)
           .then((user)=>{
-            this.$refs.audio.play();
             this.user.id = user.id;
             this.user.logged = true;
             this.user.teams = user.teams;

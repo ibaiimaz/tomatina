@@ -3,9 +3,9 @@
     <h2>Dashboard</h2>
     <md-layout md-gutter md-align="center">
       <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="25">
-        <pomodoro :stats="user.stats" :userid="user.id"></pomodoro>
+        <pomodoro :stats="user.stats" :userid="user.id" :audio="true"></pomodoro>
       </md-layout>
-      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="30"> 
+      <md-layout md-flex-xsmall="100" md-flex-small="50" md-flex="30">
         <md-list class="collection">
           <div class="header">Your teams</div>
           <md-list-item class="collection-item" v-for="team in teams" :key="team.id">

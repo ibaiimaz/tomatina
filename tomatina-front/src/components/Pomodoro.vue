@@ -5,7 +5,7 @@
           <md-icon :class="getImageSize(size)">account_box</md-icon>
           <md-card-header-text>
             <div class="md-subhead" v-if="stats">{{stats.name}}</div>
-            <countdown :stats="stats" v-if="stats"
+            <countdown :stats="stats" v-if="stats" :audio="audio"
               class="countdown"></countdown>
             <div v-if="stats && stats.status == 'working'">
               <md-icon>alarm_on</md-icon>
@@ -48,7 +48,7 @@
 
   export default {
     name: 'pomodoro',
-    props: ['userid', 'stats', 'size'],
+    props: ['userid', 'stats', 'size', 'audio'],
     data() {
       return {
         remaining: '',
