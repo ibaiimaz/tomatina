@@ -45,7 +45,9 @@ export default class UserStatsService {
   static getUserStats(userId) {
     return Vue.http.get('user-status/', { params: {user_id: userId }})
       .then(
-        (response) => new UserStats(response.body.data),
+        (response) => {
+          return new UserStats(response.body.data);
+        },
         (error) => {
           throw error;
         }

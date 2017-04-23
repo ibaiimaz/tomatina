@@ -35,14 +35,8 @@
           .then((user)=>{
             this.user.id = user.id;
             this.user.logged = true;
-          })
-          .then(() => {
-             UserStatsService.getUserStats(that.user.id).then(
-              (stats) => {
-                that.user.stats = stats;
-                that.$router.push('/dashboard');
-              }
-            );
+            this.user.teams = user.teams;
+            this.$router.push('/dashboard');
           });
       }
     },
