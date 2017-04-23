@@ -4,6 +4,8 @@ from api.models import Pomodoro
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from api.helpers import get_status
+from rest_framework import status
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from api.serializers import (
@@ -13,6 +15,7 @@ from api.serializers import (
     ListUsersSerializer,
     PomodoroSerializer
 )
+
 User = get_user_model()
 
 
@@ -43,8 +46,27 @@ class PomodoroViewSet(viewsets.ModelViewSet):
     queryset = Pomodoro.objects.all()
     serializer_class = PomodoroSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def perform_create(self, serializer):
+        pomodoros = Pomodoro.objects.filter(
+            started__gte=timezone.now() - timezone.timedelta(
+                seconds=settings.POMODORO_DURATION
+            ),
+            user_id=self.request.data['user_id'],
+            is_canceled=False)
+
+        if pomodoros:
+            pomodoro = pomodoros.first()
+            return PomodoroSerializer(pomodoro, context={'request': self.request})
+
         serializer.save(user=User.objects.get(pk=self.request.data['user_id']))
+        return serializer
 
 
 class UserStatusViewSet(viewsets.ModelViewSet):
@@ -52,7 +74,7 @@ class UserStatusViewSet(viewsets.ModelViewSet):
     serializer_class = Serializer
 
     def list(self, request, *args, **kwargs):
-        response = {'data':[]}
+        response = {'data': []}
         if 'user_id' in request.query_params:
             now = timezone.now()
             pomodoros = Pomodoro.objects.filter(
@@ -62,13 +84,13 @@ class UserStatusViewSet(viewsets.ModelViewSet):
             if pomodoros:
                 pomodoro = pomodoros.first()
                 response = {
-                    'data':[{
+                    'data': [{
                         'user_id': pomodoro.pk,
                         'status': get_status([k for k in pomodoros]),
                         'username': pomodoro.user.username,
                         'started': pomodoro.started,
                         'pomodoros': pomodoros.count()
-                        }]
+                    }]
                 }
 
         return Response(response)
@@ -79,9 +101,10 @@ class TeamStatusViewSet(viewsets.ModelViewSet):
     serializer_class = Serializer
 
     def list(self, request, *args, **kwargs):
-        response = {'data':[]}
+        response = {'data': []}
         if 'group_id' in request.query_params:
-            ids = list(User.objects.filter(groups__pk=request.query_params['group_id'][0]).values_list('pk', flat=True))
+            ids = list(
+                User.objects.filter(groups__pk=request.query_params['group_id'][0]).values_list('pk', flat=True))
             now = timezone.now()
             pomodoros = Pomodoro.objects.filter(
                 user_id__in=ids,
