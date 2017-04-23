@@ -39,10 +39,12 @@
 
     },
     created() {
+      this.user.stats = new UserStats({});
       UserStatsService.getUserStats(this.user.id)
         .then(
           (stats) => {
             this.user.stats = stats;
+            this.user = this.user;
           }
         );
     }

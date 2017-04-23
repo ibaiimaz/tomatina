@@ -5,17 +5,25 @@
           <md-icon :class="getImageSize(size)">account_box</md-icon>
           <md-card-header-text>
             <div class="md-subhead" v-if="stats">{{stats.name}}</div>
-            <countdown class="countdown" :stats="stats" v-if="stats"></countdown>
+            <countdown :stats="stats" v-if="stats"
+              class="countdown"></countdown>
             <div v-if="stats && stats.status == 'working'">
-              <md-icon class="md-primary">alarm_on</md-icon>
+              <md-icon>alarm_on</md-icon>
             </div>
-            <div v-else>
-              <md-icon class="md-warn">alarm_off</md-icon>
+            <div v-if="stats && stats.status == 'resting'">
+              <md-icon>alarm_off</md-icon>
             </div>
+            <div v-else="stats && stats.status == 'resting'">
+              <md-icon>alarm</md-icon>
+            </div>
+            <div class="md-subhead" >{{stats.status}}</div>
           </md-card-header-text>
         </md-card-header>
         <md-card-actions>
-            <div v-if="isFinished()">
+           <div v-if="stats.isFirstPomodoro">
+             Start working!
+           </div>
+            <div v-if="canStart()">
               <md-button v-on:click.native="startPomodoro">Start</md-button>
             </div>
             <div v-else>
@@ -42,7 +50,7 @@
     data() {
       return {
         remaining: '',
-        isFinished: () => !this.stats || this.stats.hasExpired(),
+        canStart: () => !this.stats || this.stats.hasExpired() || this.stats.isFirstPomodoro,
         getImageSize: getImageSize,
         getFontSize: getFontSize
       };
@@ -66,7 +74,7 @@
   .small {
     font-size: 1.5em;
   }
-  .countdown {
+  .countdown{
     margin: 10px 0;
   }
 

@@ -6,11 +6,7 @@ from rest_framework import serializers
 User = get_user_model()
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    groups = serializers.SerializerMethodField()
-
-    def get_groups(self, obj):
-        return [{'id': g.pk, 'name': g.name} for g in obj.groups.all()]
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
@@ -27,7 +23,7 @@ class PomodoroSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Pomodoro
         fields = ('url','id', 'user_id', 'is_canceled', 'started')
-        only_read = ('started')
+        read_only_fields = ('started',)
 
 
 class ListUsersSerializer(serializers.ListSerializer):
